@@ -1,0 +1,32 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>nr.</th>
+      <th *ngFor="let item of columnsSettings">
+        {{item.key | uppercase}}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data; let i = index;">
+      <td>{{i+1}}</td>
+      <td *ngFor="let settings of columnsSettings">
+        <div [ngSwitch]="settings.type">
+          <div *ngSwitchCase="'input'">
+            <input class="form-control" type="text" [value]="item[settings.key]">
+          </div>
+          <div *ngSwitchCase="'image'">
+            <img [src]="item[settings.key]" width="40">
+          </div>
+          <div *ngSwitchCase="'button'">
+            <button class="btn btn-primary" (click)="onAction(settings.text, item.id)">{{settings.text}}</button>
+          </div>
+          <div *ngSwitchDefault>
+            {{item[settings.key]}}
+          </div>
+        </div>
+      </td>
+
+    </tr>
+  </tbody>
+</table>
