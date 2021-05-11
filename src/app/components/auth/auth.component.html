@@ -1,0 +1,9 @@
+<ng-template #tpl>
+  <form #f="ngForm">
+    <input type="text" required name="username" ngModel="admin@localhost" class="form-control">
+    <input type="text" minlength="3" name="password" ngModel="Admin1" class="form-control">
+    <button (click)="logIn(f)">log in</button>
+  </form>
+</ng-template>
+
+<button *ngIf="authService.access; else tpl" (click)="logOut()">log out</button>

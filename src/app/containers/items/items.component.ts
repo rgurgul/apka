@@ -1,7 +1,9 @@
-import { ItemModel } from './../../utils/models';
+import { ItemModel, ItemsFiltersModel } from './../../utils/models';
 import { ItemsService } from './../../services/items.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { map, tap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-items',
@@ -19,15 +21,36 @@ export class ItemsComponent implements OnInit {
     { type: 'button', text: 'more' }
   ];
 
+  filters: BehaviorSubject<ItemsFiltersModel> = new BehaviorSubject({
+    itemsPerPage: 5,
+    currentPage: 1
+  });
+
   constructor(
     private itemsService: ItemsService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.itemsService.fetch().subscribe((resp) => {
-      this.items = resp.data;
+    this.filters.subscribe((value) => {
+      this.fetchItems();
     })
+  }
+
+  updateFilters(ev) {
+    this.filters.next({
+      ...this.filters.value,
+      ...ev
+    })
+  }
+
+  private fetchItems() {
+    this.itemsService.fetch(this.filters.value)
+      .pipe(
+        tap((resp) => console.log(resp)),
+        map((resp) => resp.data)
+      )
+      .subscribe((data: ItemModel[]) => this.items = data);
   }
 
   gridAction({ action, id }) {
@@ -35,6 +58,11 @@ export class ItemsComponent implements OnInit {
     switch (action) {
       case 'more':
         this.router.navigate(['items', id]);
+        break;
+      case 'remove':
+        this.itemsService.remove(id).subscribe((resp) => {
+          debugger;
+        })
         break;
 
       default:

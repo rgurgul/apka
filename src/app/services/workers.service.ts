@@ -1,23 +1,23 @@
 import { Api } from './../utils/api';
+import { HttpClient } from '@angular/common/http';
 import { HttpServiceModel } from './../utils/models';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ItemsService implements HttpServiceModel {
+export class WorkersService implements HttpServiceModel {
 
   constructor(
     private http: HttpClient
   ) { }
 
   fetch(filters?: { [key: string]: any; }): Observable<any> {
-    return this.http.get(Api.DATA_ITEMS, { params: filters });
+    return this.http.get(Api.DATA_WORKERS)
   }
   get(id: number): Observable<any> {
-    return this.http.get(Api.DATA_ITEMS + '/' + id);
+    throw new Error('Method not implemented.');
   }
   add(item: any): Observable<any> {
     throw new Error('Method not implemented.');
@@ -26,6 +26,6 @@ export class ItemsService implements HttpServiceModel {
     throw new Error('Method not implemented.');
   }
   remove(id: number): Observable<any> {
-    return this.http.delete(Api.DATA_ITEMS + '/' + id);
+    throw new Error('Method not implemented.');
   }
 }

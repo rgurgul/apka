@@ -1,3 +1,4 @@
+import { CORSInterceptor } from './utils/http.interceptor';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -7,8 +8,10 @@ import { ItemsComponent } from './containers/items/items.component';
 import { WorkersComponent } from './containers/workers/workers.component';
 import { GridComponent } from './components/grid/grid.component';
 import { SearchComponent } from './components/search/search.component';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { ItemDetailsComponent } from './containers/item-details/item-details.component';
+import { AuthComponent } from './components/auth/auth.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,14 +20,18 @@ import { ItemDetailsComponent } from './containers/item-details/item-details.com
     WorkersComponent,
     GridComponent,
     SearchComponent,
-    ItemDetailsComponent
+    ItemDetailsComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: CORSInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

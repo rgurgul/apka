@@ -1,1 +1,9 @@
 <p>item-details works!</p>
+
+<!-- <ul>
+  <li *ngFor="let item of data | keyvalue">
+    {{item|json}}
+  </li>
+</ul>
+ -->
+<app-grid [data]="data|keyvalue" [columnsSettings]="[{key: 'key'}, {key: 'value'}]"></app-grid>
