@@ -25,6 +25,7 @@ export class ItemsComponent implements OnInit {
     itemsPerPage: 5,
     currentPage: 1
   });
+  total: any;
 
   constructor(
     private itemsService: ItemsService,
@@ -48,9 +49,18 @@ export class ItemsComponent implements OnInit {
     this.itemsService.fetch(this.filters.value)
       .pipe(
         tap((resp) => console.log(resp)),
-        map((resp) => resp.data)
+        //map((resp) => resp.data)
       )
-      .subscribe((data: ItemModel[]) => this.items = data);
+      .subscribe(({ data, total }) => {
+        this.items = data
+        this.total = total;
+      });
+  }
+
+  newItemHandler(item: ItemModel) {
+    this.itemsService.add(item).subscribe((resp)=>{
+      this.fetchItems();
+    })
   }
 
   gridAction({ action, id }) {
@@ -61,7 +71,7 @@ export class ItemsComponent implements OnInit {
         break;
       case 'remove':
         this.itemsService.remove(id).subscribe((resp) => {
-          debugger;
+          this.fetchItems();
         })
         break;
 

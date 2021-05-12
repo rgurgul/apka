@@ -1,1 +1,7 @@
-<p>search works!</p>
+{{f.value|json}}
+<form #f="ngForm">
+  <label *ngFor="let control of controls">
+    {{control}}
+    <input ngModel class="form-control" [id]="'search-by-' + control" type="text" [name]="control">
+  </label>
+</form>

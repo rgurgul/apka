@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class GridComponent implements OnInit {
 
-  @Input() data: ItemModel[];
+  @Input() data: any[];
   @Input() columnsSettings: any[];
   @Output() gridEvent = new EventEmitter();
 
