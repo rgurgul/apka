@@ -4,15 +4,12 @@ import { AppPage } from './app.po';
 describe('workspace-project App', () => {
   let page: AppPage = new AppPage();
 
-  beforeAll(async() => {
+  beforeAll(async () => {
     await page.navigateTo();
+    //await page.pause(2222);
     const btnLogout = await page.logIn();
     expect(btnLogout).toBeTrue;
   })
-
-  beforeEach(() => {
-
-  });
 
   xit('should display welcome message', async () => {
     await page.navigateTo();
@@ -21,6 +18,10 @@ describe('workspace-project App', () => {
 
   it('should add new item', async () => {
     await page.navigateTo();
+    const modal = await page.fillAddItemForm();
+    const row = page.seekAndDestroy();
+    console.log('**', await row);
+    expect(row).toBeFalse;
     await page.pause();
   })
 

@@ -1,0 +1,44 @@
+<p>register works!</p>
+
+<div class="row">
+  <div class="col-6">
+    <form [formGroup]="form">
+      <div class="m-2 bg-light">
+        <input type="text" formControlName="username">
+        <div class="bg-danger">
+          {{form.get('username').errors | json}}
+        </div>
+      </div>
+
+      <div class="card card-body">
+        <input type="text" class="form-control" formControlName="password">
+        <div class="bg-danger">
+          {{form.get('password').errors | json}}
+        </div>
+      </div>
+
+      <div class="card card-body">
+        <input type="date" class="form-control" formControlName="birthDate">
+        <div class="bg-danger">
+          {{form.get('birthDate').errors | json}}
+        </div>
+      </div>
+
+      <div formGroupName="hobbies">
+        {{form.get('hobbies').value|keyvalue|json}}
+        <label *ngFor="let item of form.get('hobbies').value|keyvalue">
+          {{item.key}}
+          <input type="checkbox" [formControlName]="item.key">
+        </label>
+          <div class="bg-danger">
+            {{form.get('hobbies').errors | json}}
+          </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="col-6">
+    {{form.valid}}
+    <pre>{{form.value|json}}</pre>
+  </div>
+</div>

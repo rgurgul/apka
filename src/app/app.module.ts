@@ -1,3 +1,4 @@
+import { SharedModule } from './shared/shared.module';
 import { CORSInterceptor } from './utils/http.interceptor';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -11,9 +12,10 @@ import { SearchComponent } from './components/search/search.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { ItemDetailsComponent } from './containers/item-details/item-details.component';
 import { AuthComponent } from './components/auth/auth.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddItemComponent } from './components/add-item/add-item.component';
+import { RegisterComponent } from './containers/register/register.component';
 
 @NgModule({
   declarations: [
@@ -24,14 +26,17 @@ import { AddItemComponent } from './components/add-item/add-item.component';
     SearchComponent,
     ItemDetailsComponent,
     AuthComponent,
-    AddItemComponent
+    AddItemComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule,
+    SharedModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: CORSInterceptor, multi: true }
